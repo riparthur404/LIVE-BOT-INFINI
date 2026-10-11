@@ -1,0 +1,38 @@
+Fazox Multi Live Bot — AUTO LIVE BOT#7839
+==========================================
+
+PREREQUIS
+---------
+- Python 3.11+ (https://www.python.org/downloads/)
+- ffmpeg dans le PATH (https://ffmpeg.org/download.html)
+- Windows (scripts .ps1) ou lance manuellement: python bot.py
+
+INSTALLATION RAPIDE
+-------------------
+1. Extraire ce zip dans un dossier (ex: C:\multi-live-bot)
+2. Ouvrir PowerShell dans le dossier:
+   pip install -r requirements.txt
+3. Le fichier .env contient deja:
+   - DISCORD_TOKEN
+   - WEBHOOK_URL (backup cookies/cles)
+   - VIP_KEY=Fazox1234
+4. Lancer:
+   python bot.py
+   OU en arriere-plan: .\start-background.ps1
+   OU superviseur auto: .\host.ps1
+
+FICHIERS INCLUS
+---------------
+- .env                  → token + webhook + cle VIP
+- data/                 → base SQLite (comptes, cookies, sessions)
+- recs/                 → mets tes .mp4 ici (voir recs/LISEZMOI.txt)
+- data/rec_catalog.json → catalogue des jeux
+- requirements.txt      → dependances Python
+
+COMMANDES DISCORD
+-----------------
+/live start, /live jeu, /live cookies, /live lien_cookie, /live tous (VIP), /live aide, etc.
+
+SECURITE
+--------
+Regenere token + webhook sur Discord Developer Portal si ce zip a ete partage.

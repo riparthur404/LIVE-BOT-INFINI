@@ -1,0 +1,65 @@
+FAZOX MULTI LIVE — INSTALL PEBBLEHOST
+=====================================
+
+IMPORTANT: n'upload PAS seulement bot.py !
+
+1. Upload fazox-pebblehost.zip sur PebbleHost
+2. Extraire dans /home/container/ (racine du serveur)
+3. Verifier que ces fichiers existent:
+   - /home/container/tiktok_live.py
+   - /home/container/live_engine.py
+   - /home/container/site_bridge.py
+4. Bot Start File (panel): start.py
+5. Python: 3.11+ dans le panel (pas 3.9)
+
+--- BRIDGE SITE LOVABLE (dashboard -> bot) ---
+
+Le site envoie les commandes start/stop. Le bot les recupere toutes les 3s.
+Plus besoin du VPS pour lancer un live TikTok.
+
+A. Sur Lovable Cloud -> Secrets, ajoute:
+   BOT_API_TOKEN = (token secret, 64 caracteres hex)
+
+B. Sur PebbleHost, dans .env (ou variables panel):
+   SITE_URL=https://gleam-grow-gems.lovable.app
+   BOT_API_TOKEN=<meme valeur que Lovable>
+   ENABLE_LINK_COMMAND=1
+   POLL_INTERVAL_SECONDS=3
+   LIVE_VIDEO_DIR=/home/container
+
+C. Sur Supabase Lovable, execute les migrations:
+   supabase/migrations/20260711230000_bot_bridge.sql
+   supabase/migrations/20260712000000_bot_commands_processing.sql
+
+D. Flow utilisateur:
+   1. Site /discord -> generer code
+   2. Discord: /link CODE
+   3. Discord: /addtiktok (comptes TikTok sur le bot)
+   4. Site dashboard -> Demarrer le live
+
+E. Logs attendus au demarrage du bot:
+   [site_bridge] INFO registered (SITE_URL=..., poll=3s, /link=True)
+   [site_bridge] INFO poll loop started
+
+Si "disabled: BOT_API_TOKEN missing" -> ajoute BOT_API_TOKEN dans .env PebbleHost.
+
+Token genere pour cette install (a copier des deux cotes):
+e2ccc4fda70bc00b9a0358362dad222cc909539fd9b24e65192fa95ea90b13f9
+
+--- UPDATE MULTI-LIVE 5000 + COOKIES ANY FORMAT ---
+
+Variables optionnelles (.env PebbleHost):
+  MAX_LIVE_ACCOUNTS=5000
+  RTMP_CHUNK_SIZE=15
+  PREP_CONCURRENCY=25
+  MAX_FFMPEG_WORKERS=350
+
+Commandes nouvelles:
+  /postvideo fichier:… titre:… hashtags:… compte:…
+  /biodirect compte:… bio:… lien:…
+
+Cookies: JSON, header, Netscape, COOKIE_HEADER:, .txt/.json/.zip
+  /addtiktok → recupere cle RTMP + enregistre le compte
+
+Note hardware: 5000 lives = beaucoup de RAM/CPU/bande passante.
+  Sur un petit VPS, reduis MAX_LIVE_ACCOUNTS ou RTMP_CHUNK_SIZE.
